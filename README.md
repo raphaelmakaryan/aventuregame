@@ -82,8 +82,8 @@ To be able to play Chrono Paradox, you must stick to it as follows :
 _Below is how you can how to install Chrono Paradox . You have to_ :
 
 1. Download the repository,
-2. From your computer launched it via a terminal
-3. Enjoy the game !
+2. From your computer, open the folder that contains the game,
+3. Open the "game" folder, right-click on the "main.py" file and click "open",
+4. Enjoy the game !
 
 <p align="right">(<a href="#readme-top">Back to top !</a>)</p>
-<!--  -->
