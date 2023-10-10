@@ -2,12 +2,11 @@
 import json
 import xml.etree.ElementTree as ET
 import random
-
 # endregion IMPORT
 
 
 # region Charger Nom Chapitre Actuel
-# Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
+#//! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
 def charger_nom_chapitre_actuel():
     try:
         with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
@@ -21,7 +20,7 @@ def charger_nom_chapitre_actuel():
 
 
 # region Save Progression
-# Fonction pour enregistrer la progression du joueur dans le fichier de sauvegarde
+# //! Fonction pour enregistrer la progression du joueur dans le fichier de sauvegarde
 def enregistrer_progression(chapitre_actuel):
     progression = {"chapitre_actuel": chapitre_actuel}
     with open("save/save_file.json", "w") as fichier_sauvegarde:
@@ -32,14 +31,14 @@ def enregistrer_progression(chapitre_actuel):
 
 
 # region Charger Histoire JSON
-# Charger l'histoire depuis le fichier JSON
+# //! Charger l'histoire depuis le fichier JSON
 with open("history/historytest.json", "r") as fichier_histoire:
     histoire = json.load(fichier_histoire)
 # endregion Charger Histoire JSON
 
 
 # region Charger Caract XML
-# Charger les caractéristiques du personnage depuis le fichier XML
+# //! Charger les caractéristiques du personnage depuis le fichier XML
 arbre_personnage = ET.parse(
     "game/character_characteristics.xml", parser=ET.XMLParser(encoding="UTF-8")
 )
@@ -48,6 +47,7 @@ racine_personnage = arbre_personnage.getroot()
 
 
 # region ChoixJeu
+# //! Jeu du dée
 def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
     valeur_minimale = jeu_de_de["valeur_minimale"]
     resultat_lancer_de = random.randint(
@@ -72,19 +72,13 @@ def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
 
 
 # region Initialise Variable NomChapitreActuel
-# Initialisez la variable nom_chapitre_actuel au début du programme
+#//! Initialisez la variable nom_chapitre_actuel au début du programme
 nom_chapitre_actuel = charger_nom_chapitre_actuel()
 # endregion Initialise Variable NomChapitreActuel
 
 
 # region Afficher Chapitre
-# Fonction pour afficher un chapitre et ses choix
-# def afficher_chapitre(chapitre):
-#     print(chapitre['texte'])
-#     print("Choix disponibles:")
-#     for i, choix in enumerate(chapitre['choix']):
-#         print(f"{i + 1}. {choix['texte']}")
-
+#//!  Fonction pour afficher un chapitre et ses choix
 
 def afficher_chapitre(chapitre):
     print(chapitre["texte"])
@@ -94,15 +88,13 @@ def afficher_chapitre(chapitre):
         for i, choix in enumerate(chapitre["choix"]):
             print(f"{i + 1}. {choix['texte']}")
     else:
-        # print("Fin du chapitre. Aucun choix disponible.")
         return
-
 
 # endregion Afficher Chapitre
 
 
 # region Boucle principale du jeu
-# Boucle principale du jeu
+# //! Boucle principale du jeu
 while True:
 
     try:
