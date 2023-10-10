@@ -1,0 +1,126 @@
+{
+    "chapitres": {
+        "chapitre1": {
+            "texte": "Vous êtes devant un pont. Voulez-vous le traverser ?",
+            "choix": [
+                {
+                    "texte": "Traverser le pont",
+                    "destination": "chapitre2"
+                },
+                {
+                    "texte": "Rebrousser chemin",
+                    "destination": "chapitre3"
+                }
+            ]
+        },
+        "chapitre2": {
+            "texte": "Vous trouvez un dragon. Que faites-vous ?",
+            "choix": [
+                {
+                    "texte": "Attaquer le dragon",
+                    "destination": "chapitre4",
+                    "jeu_de_de": {
+                        "caracteristique": "force",
+                        "valeur_minimale": 12
+                    }
+                },
+                {
+                    "texte": "Fuir",
+                    "destination": "chapitre5"
+                }
+            ]
+        },
+        "chapitre3": {
+            "texte": "Vous découvrez un trésor caché. Voulez-vous l'ouvrir ?",
+            "choix": [
+                {
+                    "texte": "Ouvrir le trésor",
+                    "destination": "chapitre6"
+                },
+                {
+                    "texte": "Laisser le trésor et partir",
+                    "destination": "chapitre7"
+                }
+            ]
+        },
+        "chapitre4": {
+            "texte": "Vous avez vaincu le dragon !",
+            "choix": [
+                {
+                    "texte": "Continuer votre voyage",
+                    "destination": "chapitre8"
+                }
+            ]
+        },
+        "chapitre5": {
+            "texte": "Vous n'avez pas réussi à fuir du dragon et êtes vaincu.",
+            "choix": [
+                {
+                    "texte": "Recommencer depuis le début",
+                    "destination": "chapitre1"
+                }
+            ]
+        },
+        "chapitre6": {
+            "texte": "Le trésor était empoisonné ! Vous êtes empoisonné.",
+            "choix": [
+                {
+                    "texte": "Chercher de l'aide",
+                    "destination": "chapitre9"
+                },
+                {
+                    "texte": "Tenter de guérir vous-même",
+                    "destination": "chapitre10",
+                    "jeu_de_de": {
+                        "caracteristique": "intelligence",
+                        "valeur_minimale": 15
+                    }
+                }
+            ]
+        },
+        "chapitre7": {
+            "texte": "Vous avez laissé le trésor et continuez votre voyage.",
+            "choix": [
+                {
+                    "texte": "Continuer votre voyage",
+                    "destination": "chapitre8"
+                }
+            ]
+        },
+        "chapitre8": {
+            "texte": "Vous arrivez à une croisée des chemins. Quelle direction prenez-vous ?",
+            "choix": [
+                {
+                    "texte": "Prendre la route de gauche",
+                    "destination": "chapitre1"
+                },
+                {
+                    "texte": "Prendre la route de droite",
+                    "destination": "chapitre9"
+                }
+            ]
+        },
+        "chapitre9": {
+            "texte": "Vous trouvez un village. Que faites-vous ?",
+            "choix": [
+                {
+                    "texte": "Chercher des informations",
+                    "destination": "chapitre10"
+                },
+                {
+                    "texte": "Repos et récupération",
+                    "destination": "chapitre8"
+                }
+            ]
+        },
+        "chapitre10": {
+            "texte": "Vous apprenez des informations cruciales pour votre quête.",
+            "choix": [
+                {
+                    "texte": "Continuer votre quête",
+                    "destination": "chapitre1"
+                }
+            ]
+        }
+    }
+}
