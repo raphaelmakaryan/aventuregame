@@ -66,6 +66,7 @@ This is a text adventure game: Chrono Paradox produced by our studio Sunflower
 This section lists the main frame used to start your project. We were free to choose on which language we will program, we chose to program our game on Python 
 
 * ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+* We also used JSON and XML
 
 <p align="right">(<a href="#readme-top">Back to top !</a>)</p>
 
@@ -83,7 +84,10 @@ _Below is how you can how to install Chrono Paradox . You have to_ :
 
 1. Download the repository,
 2. From your computer, open the folder that contains the game,
-3. Open the "game" folder, right-click on the "main.py" file and click "open",
-4. Enjoy the game !
+3. Right-click and tap "open a terminal",
+4. Write this command in the terminal :  
+``` py .\game\main.py ``` 
+
+5. Enjoy the game !
 
 <p align="right">(<a href="#readme-top">Back to top !</a>)</p>

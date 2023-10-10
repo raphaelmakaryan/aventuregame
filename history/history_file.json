@@ -1,23 +1,23 @@
 {
     "chapitres": {
         "chapitre1": {
-            "texte": "Vous êtes devant un pont. Voulez-vous le traverser ?",
+            "texte": "Vous incarnez ?, un physicien quantique qui a réussi à inventer une machine à voyager dans le temps. Vous vous trouvez dans votre laboratoire, devant cette machine intrigante. Vous avez deux choix :",
             "choix": [
                 {
-                    "texte": "Traverser le pont",
+                    "texte": "Appuyer sur le bouton rouge.",
                     "destination": "chapitre2"
                 },
                 {
-                    "texte": "Rebrousser chemin",
+                    "texte": "Réfléchir à deux fois avant d'agir.",
                     "destination": "chapitre3"
                 }
             ]
         },
         "chapitre2": {
-            "texte": "Vous trouvez un dragon. Que faites-vous ?",
+            "texte": "Vous décidez de tenter l'expérience en appuyant sur le bouton rouge sans réfléchir davantage. En appuyant sur le bouton rouge, la machine à voyager dans le temps s'active brusquement. Vous vous retrouvez propulsé dans le passé, à l'époque de la Renaissance. Vous atterrissez dans le laboratoire de Léonard de Vinci. Il vous regarde avec étonnement et vous demande votre identité.",
             "choix": [
                 {
-                    "texte": "Attaquer le dragon",
+                    "texte": "Vous révélez votre véritable identité.",
                     "destination": "chapitre4",
                     "jeu_de_de": {
                         "caracteristique": "force",
@@ -25,7 +25,7 @@
                     }
                 },
                 {
-                    "texte": "Fuir",
+                    "texte": "Vous prétendez être un apprenti artiste.",
                     "destination": "chapitre5"
                 }
             ]
