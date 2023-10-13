@@ -96,6 +96,15 @@ def afficher_chapitre(chapitre):
 # endregion Afficher Chapitre
 
 
+#region FICHIER JSON CHOIX
+try:
+    with open("save/choix.json", "r") as fichier_sauvegarde:
+        choix_utilisateur_save = json.load(fichier_sauvegarde)
+except FileNotFoundError:
+    choix_utilisateur_save = []
+#endregion FICHIER JSON CHOIX
+
+
 # region Boucle principale du jeu
 # //! Boucle principale du jeu
 while True:
@@ -109,12 +118,26 @@ while True:
 
         choix_utilisateur = input("Faites un choix (1, 2 ou q pour quitter) : ")
 
+        
+
         if choix_utilisateur == "q":
             break
 
         choix_index = int(choix_utilisateur) - 1
         if 0 <= choix_index < len(chapitre_actuel["choix"]):
             choix = chapitre_actuel["choix"][choix_index]
+
+
+            def test(choix):
+                with open("save/choix.json", "w") as fichier_sauvegarde:
+                    json.dump(choix, fichier_sauvegarde)
+            choix_utilisateur_save.append(choix_utilisateur)
+            print(choix_utilisateur_save)
+            test(choix_utilisateur_save)
+            
+
+
+
 
             if "jeu_de_de" in choix:
                 jeu_de_de = choix["jeu_de_de"]
