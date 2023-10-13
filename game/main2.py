@@ -1,23 +1,11 @@
+# region CHARGEMENT DU JEU
+
 # region IMPORT
 import json
 import xml.etree.ElementTree as ET
 import random
 
 # endregion IMPORT
-
-
-# region Charger Nom Chapitre Actuel
-# //! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
-def charger_nom_chapitre_actuel():
-    try:
-        with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
-            progression = json.load(fichier_sauvegarde)
-        return progression.get("chapitre_actuel", "chapitre1")
-    except (FileNotFoundError, json.JSONDecodeError):
-        return "chapitre1"
-
-
-# endregion Charger Nom Chapitre Actuel
 
 
 # region Save Progression
@@ -72,11 +60,46 @@ def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
 # endregion ChoixJeu
 
 
+# region Charger Nom Chapitre Actuel
+# //! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
+def charger_nom_chapitre_actuel():
+    try:
+        with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
+            progression = json.load(fichier_sauvegarde)
+        return progression.get("chapitre_actuel", "chapitre1")
+    except (FileNotFoundError, json.JSONDecodeError):
+        return "chapitre1"
+
+
+# endregion Charger Nom Chapitre Actuel
+
+
 # region Initialise Variable NomChapitreActuel
 # //! Initialisez la variable nom_chapitre_actuel au début du programme
 nom_chapitre_actuel = charger_nom_chapitre_actuel()
 # endregion Initialise Variable NomChapitreActuel
 
+
+# region FICHIER JSON CHOIX
+try:
+    with open("save/choix.json", "r") as fichier_sauvegarde:
+        choix_utilisateur_save = json.load(fichier_sauvegarde)
+except FileNotFoundError:
+    choix_utilisateur_save = []
+# endregion FICHIER JSON CHOIX
+
+# endregion CHARGEMENT DU JEU
+
+
+# region DebutDuJeu
+
+# region MenuPrincipal
+# endregion MenuPrincipal
+
+# endregion DebutDuJeu
+
+
+# region Lancement de l’histoire
 
 # region Afficher Chapitre
 # //!  Fonction pour afficher un chapitre et ses choix
@@ -95,36 +118,8 @@ def afficher_chapitre(chapitre):
 
 # endregion Afficher Chapitre
 
-# region FICHIER JSON CHOIX
-# try:
-#     with open("save/choix.json", "r") as fichier_sauvegarde:
-#         choix_utilisateur_save = json.load(fichier_sauvegarde)
-# except FileNotFoundError:
-#     choix_utilisateur_save = []
-# endregion FICHIER JSON CHOIX
 
-
-def test(choix, texteChapitre, nomChapitre):
-    # Charger choix depuis le fichier JSON
-    with open("save/choix.json", "r") as fichier_choix:
-        choix_json = json.load(fichier_choix)
-
-    # Créer une structure de choix
-    structure = {
-        "Chapter_name": nomChapitre,
-        "Text": texteChapitre["texte"],
-        "Choice": choix,
-    }
-
-    # Ajouter la structure à l'historique
-    choix_json["history"].append(structure)
-
-    # Sauvegarder la mise à jour dans le fichier JSON
-    with open("save/choix.json", "w") as fichier_choix:
-        json.dump(choix_json, fichier_choix)
-
-
-# region Boucle principale du jeu
+# region DebutDuJeu
 # //! Boucle principale du jeu
 while True:
     try:
@@ -144,9 +139,13 @@ while True:
         if 0 <= choix_index < len(chapitre_actuel["choix"]):
             choix = chapitre_actuel["choix"][choix_index]
 
-            # choix_utilisateur_save.append(choix_utilisateur)
-            test(choix_utilisateur, chapitre_actuel, nom_chapitre_actuel)
-            # test(choix_utilisateur_save, chapitre_actuel)
+            def test(choix):
+                with open("save/choix.json", "w") as fichier_sauvegarde:
+                    json.dump(choix, fichier_sauvegarde)
+
+            choix_utilisateur_save.append(choix_utilisateur)
+            print(choix_utilisateur_save)
+            test(choix_utilisateur_save)
 
             if "jeu_de_de" in choix:
                 jeu_de_de = choix["jeu_de_de"]
@@ -171,4 +170,7 @@ while True:
     except:
         print("Erreur, Chrono Paradox vien de crash !")
         break
-# endregion Boucle principale du jeu
+# endregion DebutDuJeu
+
+
+# endregion Lancement de l’histoire
