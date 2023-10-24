@@ -9,8 +9,7 @@ import random
 def charger_nom_chapitre_actuel():
     try:
         with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
-            progression = 
-            (fichier_sauvegarde)
+            progression = json.load(fichier_sauvegarde)
         return progression.get("chapitre_actuel", "chapitre1")
     except (FileNotFoundError, json.JSONDecodeError):
         return "chapitre1"
