@@ -9,7 +9,8 @@ import random
 def charger_nom_chapitre_actuel():
     try:
         with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
-            progression = json.load(fichier_sauvegarde)
+            progression = 
+            (fichier_sauvegarde)
         return progression.get("chapitre_actuel", "chapitre1")
     except (FileNotFoundError, json.JSONDecodeError):
         return "chapitre1"
@@ -94,8 +95,37 @@ def menu_principal():
     else:
         print("Vous n'avez pas effectué un bon choix")
         return menu_principal()
-
 # endregion View
+
+# region FICHIER JSON CHOIX
+# try:
+#     with open("save/choix.json", "r") as fichier_sauvegarde:
+#         choix_utilisateur_save = json.load(fichier_sauvegarde)
+# except FileNotFoundError:
+#     choix_utilisateur_save = []
+# endregion FICHIER JSON CHOIX
+
+
+def test(choix, texteChapitre, nomChapitre):
+    # Charger choix depuis le fichier JSON
+    with open("save/choix.json", "r") as fichier_choix:
+        choix_json = json.load(fichier_choix)
+
+    # Créer une structure de choix
+    structure = {
+        "Chapter_name": nomChapitre,
+        "Text": texteChapitre["texte"],
+        "Choice": choix,
+    }
+
+    # Ajouter la structure à l'historique
+    choix_json["history"].append(structure)
+
+    # Sauvegarder la mise à jour dans le fichier JSON
+    with open("save/choix.json", "w") as fichier_choix:
+        json.dump(choix_json, fichier_choix)
+
+
 
 # region Game
 # //! Boucle principale du jeu
@@ -122,6 +152,11 @@ def main_game():
         if 0 <= choix_index < len(chapitre_actuel["choix"]):
             choix = chapitre_actuel["choix"][choix_index]
 
+            # choix_utilisateur_save.append(choix_utilisateur)
+            
+            test(choix_utilisateur, chapitre_actuel, nom_chapitre_actuel)
+            # test(choix_utilisateur_save, chapitre_actuel)
+
             if "jeu_de_de" in choix:
                 jeu_de_de = choix["jeu_de_de"]
                 caracteristique_personnage = 10  # Remplacez cette valeur par la caractéristique réelle du personnage
@@ -129,7 +164,9 @@ def main_game():
                     if choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
                         nom_chapitre_actuel = jeu_de_de["True"]["destination"]
                         enregistrer_progression(nom_chapitre_actuel)
-                    elif choix_jeu_de_de(jeu_de_de, caracteristique_personnage) == False:
+                    elif (
+                        choix_jeu_de_de(jeu_de_de, caracteristique_personnage) == False
+                    ):
                         nom_chapitre_actuel = jeu_de_de["False"]["destination"]
                         enregistrer_progression(nom_chapitre_actuel)
             else:

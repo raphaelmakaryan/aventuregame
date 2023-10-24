@@ -33,11 +33,11 @@
                     "texte": "Vous tentez de ma\u00EEtriser la distorsion.",
                     "destination": "",
                     "jeu_de_de": {
-                        "True":{
-                            "destination":"chapitre3B1"
+                        "True": {
+                            "destination": "chapitre3B1"
                         },
-                        "False":{
-                            "destination":"chapitre3B2"
+                        "False": {
+                            "destination": "chapitre3B2"
                         },
                         "caracteristique": "force",
                         "valeur_minimale": 12
@@ -123,7 +123,7 @@
             "choix": [
                 {
                     "texte": "Vous travaillez sur un projet secret.",
-                    "destination": ""
+                    "destination": "chapitre5A2a1"
                 },
                 {
                     "texte": "Vous partez explorer le monde.",
@@ -179,6 +179,45 @@
                 },
                 {
                     "texte": "Vous d\u00E9cidez de partir \u00E0 l'aventure.",
+                    "destination": ""
+                }
+            ]
+        },
+        "chapitre5A1a1": {
+            "texte": "Pendant que vous et Léonard de Vinci êtes en train de réaliser un projet qui pourrait changer le monde, Léonard aperçoit vos talents d’ingénieur hors du commun et que vous possédez des connaissances que personne ne connaît. Léonard de Vinci nous vous fait plus confiance et décide donc de faire appel à la milice. Heureusement, vous avez remarqué cela, alors :",
+            "choix": [
+                {
+                    "texte": "Vous vous préparez au combat.",
+                    "destination": ""
+                },
+                {
+                    "texte": "Vous décidez de fuir.",
+                    "destination": ""
+                }
+            ]
+        },
+        "chapitre5A1a2": {
+            "texte": "Vous restez à l'époque de la Renaissance et devenez un disciple dévoué de Léonard de Vinci. Vous épanouissez vos talents artistiques et scientifiques en travaillant aux côtés de ce génie. Alors que vous continuez à travailler sur la machine à voyager dans le temps pour retourner chez vous, vous découvrez une pièce manquante cachée dans les croquis et les notes de Léonard.",
+            "choix": [
+                {
+                    "texte": "Vous parlez à Léonard de la découverte.",
+                    "destination": ""
+                },
+                {
+                    "texte": "Vous décidez de garder la découverte secrète.",
+                    "destination": ""
+                }
+            ]
+        },
+        "chapitre5A2a1": {
+            "texte": "En utilisant vos connaissances du futur, vous aidez L\u00E9onard de Vinci dans ses exp\u00E9riences scientifiques. Vous faites des d\u00E9couvertes r\u00E9volutionnaires ensemble, alliant la sagesse du pass\u00E9 \u00E0 la vision du futur.",
+            "choix": [
+                {
+                    "texte": "Vous travaillez sur un projet secret.",
+                    "destination": ""
+                },
+                {
+                    "texte": "Vous partez explorer le monde.",
                     "destination": ""
                 }
             ]
