@@ -2,11 +2,9 @@
 import json
 import xml.etree.ElementTree as ET
 import random
-
 # endregion IMPORT
 
-
-# region Charger Nom Chapitre Actuel
+# region Load files
 # //! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
 def charger_nom_chapitre_actuel():
     try:
@@ -16,9 +14,21 @@ def charger_nom_chapitre_actuel():
     except (FileNotFoundError, json.JSONDecodeError):
         return "chapitre1"
 
+# //! Charger l'histoire depuis le fichier JSON
+def charger_histoire_principal():
+    with open("history/history_file.json", "r") as fichier_histoire:
+        histoire = json.load(fichier_histoire)
+        return histoire
 
-# endregion Charger Nom Chapitre Actuel
+# //! Charger les caractéristiques du personnage depuis le fichier XML
+def charger_caracteristiques_personnage():
+    arbre_personnage = ET.parse(
+        "game/character_characteristics.xml", parser=ET.XMLParser(encoding="UTF-8")
+    )
+    racine_personnage = arbre_personnage.getroot()
+    return racine_personnage
 
+# endregion Load files
 
 # region Save Progression
 # //! Fonction pour enregistrer la progression du joueur dans le fichier de sauvegarde
@@ -26,28 +36,9 @@ def enregistrer_progression(chapitre_actuel):
     progression = {"chapitre_actuel": chapitre_actuel}
     with open("save/save_file.json", "w") as fichier_sauvegarde:
         json.dump(progression, fichier_sauvegarde)
-
-
 # endregion Save Progression
 
-
-# region Charger Histoire JSON
-# //! Charger l'histoire depuis le fichier JSON
-with open("history/history_file.json", "r") as fichier_histoire:
-    histoire = json.load(fichier_histoire)
-# endregion Charger Histoire JSON
-
-
-# region Charger Caract XML
-# //! Charger les caractéristiques du personnage depuis le fichier XML
-arbre_personnage = ET.parse(
-    "game/character_characteristics.xml", parser=ET.XMLParser(encoding="UTF-8")
-)
-racine_personnage = arbre_personnage.getroot()
-# endregion Charger Caract XML
-
-
-# region ChoixJeu
+# region Gameplay
 # //! Jeu du dée
 def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
     valeur_minimale = jeu_de_de["valeur_minimale"]
@@ -67,21 +58,17 @@ def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
     else:
         print("Vous avez échoué le lancer de dé...")
         return False
+# //!   Fonction pour démarrer une nouvelle partie
+def nouvelle_partie():
+    enregistrer_progression("chapitre1")
 
+# //!   Fonction pour continuer une partie
+def continuer_partie(nom_chapitre_actuel):
+    return histoire["chapitres"][nom_chapitre_actuel]
+# endregion Mini jeu
 
-# endregion ChoixJeu
-
-
-# region Initialise Variable NomChapitreActuel
-# //! Initialisez la variable nom_chapitre_actuel au début du programme
-nom_chapitre_actuel = charger_nom_chapitre_actuel()
-# endregion Initialise Variable NomChapitreActuel
-
-
-# region Afficher Chapitre
+# region View
 # //!  Fonction pour afficher un chapitre et ses choix
-
-
 def afficher_chapitre(chapitre):
     print(chapitre["texte"])
 
@@ -92,24 +79,43 @@ def afficher_chapitre(chapitre):
     else:
         return
 
+# //!  Fonction d'affichage du menu principal
+def menu_principal():
+    print("Menu principal : \n1. Nouvelle Partie\n2. Continuer la Partie\nq. Quitter le jeu")
+    choix_utilisateur = input()
+    if choix_utilisateur == "q":
+        #Sortir du jeu
+        return 0
+    elif choix_utilisateur == "1":
+        nouvelle_partie()
+        return 1
+    elif choix_utilisateur == "2":
+        return 2
+    else:
+        print("Vous n'avez pas effectué un bon choix")
+        return menu_principal()
 
-# endregion Afficher Chapitre
+# endregion View
 
-
-# region Boucle principale du jeu
+# region Game
 # //! Boucle principale du jeu
-while True:
-    try:
-        chapitre_actuel = histoire["chapitres"][nom_chapitre_actuel]
-
+def main_game():
+    # //! Initialisez la variable nom_chapitre_actuel au début du programme
+    nom_chapitre_actuel = charger_nom_chapitre_actuel()
+    while True:
+        chapitre_actuel = continuer_partie(nom_chapitre_actuel)
         afficher_chapitre(chapitre_actuel)
 
-        if nom_chapitre_actuel in ["finApprenti", "finPrison"]:
+        if nom_chapitre_actuel.startswith("fin"):
             break
 
-        choix_utilisateur = input("Faites un choix (1, 2 ou q pour quitter) : ")
+        choix_utilisateur = input("Faites un choix (1, 2 ou m pour retourner au menu principal) : ")
 
-        if choix_utilisateur == "q":
+        if choix_utilisateur == "m":
+            choix_menu_principal = menu_principal()
+            if choix_menu_principal == 0:
+                break
+            main_game()
             break
 
         choix_index = int(choix_utilisateur) - 1
@@ -133,8 +139,14 @@ while True:
             print(
                 "Choix invalide. Veuillez choisir un numéro valide ou 'q' pour quitter."
             )
+# endregion Game
 
-    except:
-        print("Erreur, Chrono Paradox vien de crash !")
-        break
-# endregion Boucle principale du jeu
+# region Lancement du jeu
+histoire = charger_histoire_principal()
+racine_personnage = charger_caracteristiques_personnage()
+choix_menu_principal = menu_principal()
+if choix_menu_principal != 0:
+    main_game()
+else:
+    print("Le jeu s'arrête !")
+# endregion Lancement du jeu
