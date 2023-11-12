@@ -14,9 +14,10 @@ def show_chapter(chapter):
 
 # //!  Fonction d'affichage du menu principal
 def main_menu():
-    print("Menu principal : \n1. Nouvelle Partie\n2. Continuer la Partie\nm. Quitter le jeu")
+    print("Menu principal : \n1. Nouvelle Partie\n2. Continuer la Partie\nq. Quitter le jeu")
     user_choice = input()
-    if user_choice == "m":
+    print()
+    if user_choice == "q":
         #Sortir du jeu
         return 0
     elif user_choice == "1":
@@ -26,4 +27,5 @@ def main_menu():
         return 2
     else:
         print("Vous n'avez pas effectué un bon choix")
+        print()
         return main_menu()

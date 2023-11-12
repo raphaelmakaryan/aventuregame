@@ -3,7 +3,7 @@ import json
 
 def historical(choice, textChapter, nameChapter):
     # Charger choice depuis le fichier JSON
-    with open("save/choice.json", "r") as choice_file:
+    with open("save/choice.json", "r", encoding='utf-8') as choice_file:
         choice_json = json.load(choice_file)
 
     # Créer une structure de choice
