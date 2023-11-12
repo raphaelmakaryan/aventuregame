@@ -1,6 +1,4 @@
 <personnage>
-    <nom>VotreNom</nom>
-    <niveau>1</niveau>
-    <vie>100</vie>
-    <force>10</force>
+    <nom>1</nom>
+    <chapitre_actuel>finPrison</chapitre_actuel>
 </personnage>

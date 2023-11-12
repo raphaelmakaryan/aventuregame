@@ -4,14 +4,41 @@ import xml.etree.ElementTree as ET
 import random
 # endregion IMPORT
 
+def modifier_nom_personnage(nouveau_nom):
+    # Charger le fichier XML
+    tree = ET.parse('game/character_characteristics.xml')
+    root = tree.getroot()
+
+    # Trouver l'élément 'nom' et le modifier avec le nouveau nom
+    nom_element = root.find('nom')
+    nom_element.text = nouveau_nom
+
+    # Enregistrer les modifications dans le fichier XML
+    tree.write('game/character_characteristics.xml')
+
+def md_creation():
+    with open("save/choix.json") as history:
+        history_json = json.load(history)
+
+    markdown_content = ""
+
+    for chapter in history_json["history"]:
+        markdown_content += f"# {chapter['Chapter_name']} \n"
+        markdown_content += f"### {chapter['Text']} \n"
+        markdown_content += f"### {chapter['Choice']} \n\n"
+
+    with open("save/history.md", "w", encoding="utf-8") as md_file:
+        md_file.write(markdown_content)
+
 # region Load files
 # //! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
 def charger_nom_chapitre_actuel():
     try:
-        with open("save/save_file.json", "r", encoding="UTF-8") as fichier_sauvegarde:
-            progression = json.load(fichier_sauvegarde)
-        return progression.get("chapitre_actuel", "chapitre1")
-    except (FileNotFoundError, json.JSONDecodeError):
+        tree = ET.parse('game/character_characteristics.xml')
+        root = tree.getroot()
+        chapitre_actuel_element = root.find('chapitre_actuel')
+        return chapitre_actuel_element.text
+    except (FileNotFoundError, ET.ParseError):
         return "chapitre1"
 
 # //! Charger l'histoire depuis le fichier JSON
@@ -33,9 +60,23 @@ def charger_caracteristiques_personnage():
 # region Save Progression
 # //! Fonction pour enregistrer la progression du joueur dans le fichier de sauvegarde
 def enregistrer_progression(chapitre_actuel):
-    progression = {"chapitre_actuel": chapitre_actuel}
-    with open("save/save_file.json", "w") as fichier_sauvegarde:
-        json.dump(progression, fichier_sauvegarde)
+    try:
+        tree = ET.parse('game/character_characteristics.xml')
+        root = tree.getroot()
+        chapitre_actuel_element = root.find('chapitre_actuel')
+        chapitre_actuel_element.text = chapitre_actuel
+        tree.write('game/character_characteristics.xml')
+    except (FileNotFoundError, ET.ParseError):
+        print("Erreur lors de l'enregistrement de la progression.")
+
+def resetChoice():
+    struct = {
+        "history": []
+    }
+
+    with open("save/choix.json", "w") as history:
+        json.dump(struct, history)
+
 # endregion Save Progression
 
 # region Gameplay
@@ -60,6 +101,9 @@ def choix_jeu_de_de(jeu_de_de, caracteristique_personnage):
         return False
 # //!   Fonction pour démarrer une nouvelle partie
 def nouvelle_partie():
+    nouveau_nom = input("Entrez le nouveau nom de votre personnage : ")
+    modifier_nom_personnage(nouveau_nom)
+
     enregistrer_progression("chapitre1")
 
 # //!   Fonction pour continuer une partie
@@ -87,6 +131,7 @@ def menu_principal():
         #Sortir du jeu
         return 0
     elif choix_utilisateur == "1":
+        resetChoice()
         nouvelle_partie()
         return 1
     elif choix_utilisateur == "2":
@@ -136,6 +181,9 @@ def main_game():
         afficher_chapitre(chapitre_actuel)
 
         if nom_chapitre_actuel.startswith("fin"):
+            test("", chapitre_actuel, nom_chapitre_actuel)
+            md_creation()
+            resetChoice()
             break
 
         choix_utilisateur = input("Faites un choix (1, 2 ou m pour retourner au menu principal) : ")
@@ -153,7 +201,7 @@ def main_game():
 
             # choix_utilisateur_save.append(choix_utilisateur)
             
-            test(choix_utilisateur, chapitre_actuel, nom_chapitre_actuel)
+            test(choix["texte"], chapitre_actuel, nom_chapitre_actuel)
             # test(choix_utilisateur_save, chapitre_actuel)
 
             if "jeu_de_de" in choix:
