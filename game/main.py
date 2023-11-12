@@ -10,10 +10,11 @@ import view_file
 # //! Fonction pour charger le nom du chapitre actuel depuis le fichier de sauvegarde
 def load_current_chapter_name():
     try:
-        with open("save/save_file.json", "r", encoding="UTF-8") as backup_file:
-            progression = json.load(backup_file)
-        return progression.get("chapitre_actuel", "chapitre1")
-    except (FileNotFoundError, json.JSONDecodeError):
+        tree = ET.parse('game/character_characteristics.xml')
+        root = tree.getroot()
+        chapitre_actuel_element = root.find('chapitre_actuel')
+        return chapitre_actuel_element.text
+    except (FileNotFoundError, ET.ParseError):
         return "chapitre1"
 
 

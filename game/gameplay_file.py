@@ -2,7 +2,19 @@ import savegame_file
 import random
 import os
 import json
+import xml.etree.ElementTree as ET
 
+def modifier_nom_personnage(nouveau_nom):
+    # Charger le fichier XML
+    tree = ET.parse('game/character_characteristics.xml')
+    root = tree.getroot()
+
+    # Trouver l'élément 'nom' et le modifier avec le nouveau nom
+    nom_element = root.find('nom')
+    nom_element.text = nouveau_nom
+
+    # Enregistrer les modifications dans le fichier XML
+    tree.write('game/character_characteristics.xml')
 
 # //! Jeu du dée
 def dice_game(dice_game, character_characteristic):
@@ -28,6 +40,8 @@ def dice_game(dice_game, character_characteristic):
 # //!   Fonction pour démarrer une nouvelle partie
 def new_game():
     initial_data = {"history": []}
+    nouveau_nom = input("Entrez le nouveau nom de votre personnage : ")
+    modifier_nom_personnage(nouveau_nom)
     if not os.path.exists("save/choice.json"):
         with open("save/choice.json", "w") as json_file:
             json.dump(initial_data, json_file)

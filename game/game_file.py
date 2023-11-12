@@ -2,6 +2,21 @@ import gameplay_file
 import view_file
 import jsonchoice_file
 import savegame_file
+import json
+
+def md_creation():
+    with open("save/choice.json") as history:
+        history_json = json.load(history)
+
+    markdown_content = ""
+
+    for chapter in history_json["history"]:
+        markdown_content += f"# {chapter['Chapter_name']} \n"
+        markdown_content += f"### {chapter['Text']} \n"
+        markdown_content += f"### {chapter['Choice']} \n\n"
+
+    with open("save/history.md", "w", encoding="utf-8") as md_file:
+        md_file.write(markdown_content)
 
 # //! Boucle principale du jeu
 def main_game(load_current_chapter_name, history):
@@ -12,6 +27,8 @@ def main_game(load_current_chapter_name, history):
         view_file.show_chapter(current_chapter)
 
         if current_chapter_name.startswith("fin"):
+            jsonchoice_file.historical("", current_chapter, current_chapter_name)
+            md_creation()
             break
 
         user_choice = input(
@@ -29,7 +46,7 @@ def main_game(load_current_chapter_name, history):
         if 0 <= choice_index < len(current_chapter["choix"]):
             choice = current_chapter["choix"][choice_index]
 
-            jsonchoice_file.historical(user_choice, current_chapter, current_chapter_name)
+            jsonchoice_file.historical(choice["texte"], current_chapter, current_chapter_name)
 
             if "dice_game" in choice:
                 dice_game = choice["dice_game"]
