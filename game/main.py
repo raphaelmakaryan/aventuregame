@@ -19,7 +19,7 @@ def load_current_chapter_name():
 
 # //! Charger l'histoire depuis le fichier JSON
 def load_story_main():
-    with open("history/history_file.json", "r") as story_file:
+    with open("history/history_file.json", "r", encoding='utf-8') as story_file:
         history = json.load(story_file)
         return history
 

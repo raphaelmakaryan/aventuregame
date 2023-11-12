@@ -7,22 +7,27 @@ import savegame_file
 def main_game(load_current_chapter_name, history):
     # //! Initialisez la variable current_chapter_name au début du programme
     current_chapter_name = load_current_chapter_name()
+    if current_chapter_name.startswith("fin") or current_chapter_name == "":
+        gameplay_file.new_game()
+        current_chapter_name = load_current_chapter_name()
     while True:
         current_chapter = gameplay_file.continue_game(current_chapter_name, history)
         view_file.show_chapter(current_chapter)
 
-        if current_chapter_name.startswith("fin"):
+        if current_chapter_name.startswith("fin") or current_chapter_name == "":
             break
 
         user_choice = input(
             "Faites un choix (1, 2 ou m pour retourner au menu principal) : "
         )
 
+        print()
+
         if user_choice == "m":
             main_menu_choice = view_file.main_menu()
             if main_menu_choice == 0:
                 break
-            main_game()
+            main_game(load_current_chapter_name, history)
             break
 
         choice_index = int(user_choice) - 1
@@ -31,23 +36,16 @@ def main_game(load_current_chapter_name, history):
 
             jsonchoice_file.historical(user_choice, current_chapter, current_chapter_name)
 
-            if "dice_game" in choice:
-                dice_game = choice["dice_game"]
+            if "jeu_de_de" in choice:
+                dice_game = choice["jeu_de_de"]
                 character_characteristic = 10  # Remplacez cette valeur par la caractéristique réelle du personnage
                 if gameplay_file.dice_game(dice_game, character_characteristic):
-                    if gameplay_file.dice_game(
-                        dice_game, character_characteristic
-                    ):
-                        current_chapter_name = dice_game["True"]["destination"]
-                        savegame_file.save_progress(current_chapter_name)
-                    elif (
-                        gameplay_file.dice_game(
-                            dice_game, character_characteristic
-                        )
-                        == False
-                    ):
-                        current_chapter_name = dice_game["False"]["destination"]
-                        savegame_file.save_progress(current_chapter_name)
+                    current_chapter_name = dice_game["True"]["destination"]
+                    savegame_file.save_progress(current_chapter_name)
+                else:
+                    current_chapter_name = dice_game["False"]["destination"]
+                    savegame_file.save_progress(current_chapter_name)
+                print()
             else:
                 current_chapter_name = choice["destination"]
                 savegame_file.save_progress(current_chapter_name)

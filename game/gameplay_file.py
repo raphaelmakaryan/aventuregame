@@ -8,8 +8,8 @@ import json
 def dice_game(dice_game, character_characteristic):
     minimum_value = dice_game["valeur_minimale"]
     result_lancer_dice = random.randint(
-        1, 20
-    )  # Lancer de dé 20 faces (vous pouvez ajuster la portée)
+        1, 6
+    )  # Lancer de dé 6 faces (vous pouvez ajuster la portée)
 
     # Ajoutez des modifications en fonction de la caractéristique du personnage (par exemple, force)
     # Pour cet exemple, nous supposons une modification fixe de +2 pour la caractéristique "force".
